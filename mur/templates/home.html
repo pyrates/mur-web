@@ -43,6 +43,15 @@
         </div>
       </div>
     </section>
+    {% if message %}
+        <section class="section">
+          <div class="container">
+            <div class="notification is-{{ message[1] }}">
+              <p>{{ message[0] }}</p>
+            </div>
+          </div>
+         </section>
+    {% endif %}
 
     <section class="section">
       <div class="container">

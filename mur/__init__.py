@@ -7,13 +7,19 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from roll import HttpError, Response, Roll
 from roll.extensions import simple_server, static, traceback
 
-from . import config, utils, emails
+from . import utils, emails
 
 
 class Response(Response):
-    def html(self, template_name, *args, **kwargs):
+    def html(self, template_name, *args, **context):
+        if self.request.cookies.get("message"):
+            context["message"] = json.loads(self.request.cookies["message"])
+            self.cookies.set("message", "")
         self.headers["Content-Type"] = "text/html; charset=utf-8"
-        self.body = env.get_template(template_name).render(*args, **kwargs)
+        self.body = env.get_template(template_name).render(*args, **context)
+
+    def message(self, text, status="success"):
+        self.cookies.set("message", json.dumps((text, status)))
 
 
 class Roll(Roll):
@@ -40,6 +46,12 @@ def token_required(view):
             raise HttpError(401, "Invalid token")
         return view(request, response, *args, **kwargs)
     return wrapper
+
+
+@app.listen("request")
+async def attach_request(request, response):
+    # TODO should this be done by default in Roll ?
+    response.request = request
 
 
 @app.listen("startup")
@@ -71,7 +83,7 @@ async def door_opener(request, response):
     """
     print(link)
     emails.send(email, "MUR sésame", body)
-    # TODO message
+    response.message(f"Un sésame a été envoyé sur le courriel {email}", "info")
     response.status = 302
     response.headers["Location"] = "/"
 
@@ -91,7 +103,7 @@ async def volunteer_data(request, response):
             "INSERT OR REPLACE INTO volunteers values (?, ?)",
             (request["email"], json.dumps(data)),
         )
-    # TODO message
+    response.message(f"Merci! Nous reviendrons vers vous très vite", "info")
     response.status = 302
     response.headers["Location"] = "/"
 
