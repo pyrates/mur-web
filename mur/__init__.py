@@ -7,7 +7,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from roll import HttpError, Response, Roll
 from roll.extensions import simple_server, static, traceback
 
-from . import config, utils
+from . import config, utils, emails
 
 
 class Response(Response):
@@ -44,7 +44,16 @@ async def door_opener(request, response):
     # Send email
     email = request.form.get("email")
     token = utils.create_token(email)
-    print(f"http://localhost:1919/aider?token={token.decode()}")
+    link = f"https://{request.host}/aider?token={token.decode()}"
+    body = f"""
+    Salut!
+
+    {link}
+
+    Merci!
+    """
+    print(link)
+    emails.send(email, "MUR sésame", body)
     # TODO message
     response.status = 302
     response.headers["Location"] = "/"
