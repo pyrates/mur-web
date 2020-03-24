@@ -39,6 +39,11 @@ async def home(request, response):
     response.html("home.html")
 
 
+@app.route("/cgu.html", methods=["GET"])
+async def cgu(request, response):
+    response.html("cgu.html")
+
+
 @app.route("/", methods=["POST"])
 async def door_opener(request, response):
     # Send email
