@@ -4,6 +4,10 @@
 
     make develop
 
+## Init DB
+
+    mur init-db
+
 ## Run
 
     mur serve --reload

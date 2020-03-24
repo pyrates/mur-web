@@ -72,7 +72,59 @@
           merci de remplir le formulaire avec le bouton ci-dessous :</strong>
         </h2>
         <div class="has-text-center">
-          <a href=""><button class="button is-primary is-link">JE PEUX AIDER (FORMULAIRE BIENTOT DISPONIBLE)</button></a>
+          <details>
+            <summary><a class="button is-primary is-link is-large is-fullwidth">JE SOUHAITE AIDER</a></summary>
+
+            <form id="form" method="post">
+
+              <div class="field">
+                <label class="label" for="name">Nom</label>
+                <div class="control">
+                  <input class="input" type="text" id="name" name="name" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="email">Courriel</label>
+                <div class="control has-icons-left">
+                  <input class="input" id="email" name="email" type="email" required>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="city">Ville</label>
+                <div class="control">
+                  <input class="input" type="text" id="city" name="city">
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="postal">Code postal</label>
+                <div class="control">
+                  <input class="input" type="text" id="postal" name="postal" pattern="[0-9][0-9AB][0-9]{3}" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="skills">Compétences</label>
+                <div class="control">
+                  <textarea class="textarea" id="skills" name="skills" required></textarea>
+                </div>
+              </div>
+
+              <div class="field is-grouped">
+                <div class="control">
+                  <button class="button is-link">Envoyer</button>
+                </div>
+                <div class="control">
+                  <button class="button is-link is-light">Annuler</button>
+                </div>
+              </div>
+            </form>
+          </details>
         </div>
       </div>
     </section>
