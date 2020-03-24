@@ -109,6 +109,13 @@
             <form id="form" method="post">
 
               <div class="field">
+                <label class="label" for="name">Nom</label>
+                <div class="control">
+                  <input class="input" type="text" id="name" name="name" required>
+                </div>
+              </div>
+
+              <div class="field">
                 <label class="label" for="email">Courriel</label>
                 <div class="control has-icons-left">
                   <input class="input" id="email" name="email" type="email" required>
@@ -116,12 +123,32 @@
                     <i class="fas fa-envelope"></i>
                   </span>
                 </div>
-                <p class="help">Aucun spam, promis, juré, mains lavées.</p>
+              </div>
+
+              <div class="field">
+                <label class="label" for="city">Ville</label>
+                <div class="control">
+                  <input class="input" type="text" id="city" name="city">
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="postal">Code postal</label>
+                <div class="control">
+                  <input class="input" type="text" id="postal" name="postal" pattern="[0-9][0-9AB][0-9]{3}" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="skills">Compétences</label>
+                <div class="control">
+                  <textarea class="textarea" id="skills" name="skills" required></textarea>
+                </div>
               </div>
 
               <div class="field is-grouped">
                 <div class="control">
-                  <button class="button is-link">Recevoir un courriel d’identification</button>
+                  <button class="button is-link">Envoyer</button>
                 </div>
                 <div class="control">
                   <button class="button is-link is-light">Annuler</button>
