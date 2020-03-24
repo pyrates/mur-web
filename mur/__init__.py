@@ -4,10 +4,10 @@ from pathlib import Path
 import minicli
 import ujson as json
 from jinja2 import Environment, PackageLoader, select_autoescape
-from roll import Response, Roll
+from roll import Roll, Response, HttpError
 from roll.extensions import simple_server, static, traceback
 
-from . import config
+from . import config, utils
 
 
 class Response(Response):
@@ -39,20 +39,39 @@ async def home(request, response):
     response.html("home.html")
 
 
-@app.route("/form", methods=["GET"])
-async def form(request, response):
+@app.route("/", methods=["POST"])
+async def door_opener(request, response):
+    # Send email
+    email = request.form.get("email")
+    token = utils.create_token(email)
+    print(token)
+    # TODO message
+    response.status = 302
+    response.headers["Location"] = "/"
+
+
+@app.route("/aider", methods=["GET"])
+async def volunteer_form(request, response):
     response.html("form.html")
 
 
-@app.route("/", methods=["POST"])
+@app.route("/aider", methods=["POST"])
 async def volunteer_data(request, response):
+    token = request.query.get("token")
+    try:
+        email = utils.read_token(token)
+    except ValueError:
+        # TODO message
+        raise HttpError(401, "Invalid token")
     data = {k: request.form.get(k) for k in request.form}
     with app.conn as cursor:
         cursor.execute(
             "INSERT OR REPLACE INTO volunteers values (?, ?)",
-            (data["email"], json.dumps(data)),
+            (email, json.dumps(data)),
         )
-    response.html("index.html")
+    # TODO message
+    response.status = 302
+    response.headers["Location"] = "/"
 
 
 @minicli.cli
