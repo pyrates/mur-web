@@ -13,7 +13,7 @@ from . import config, utils, emails
 class Response(Response):
     def html(self, template_name, *args, **kwargs):
         self.headers["Content-Type"] = "text/html; charset=utf-8"
-        self.body = env.get_template(template_name).render(*args)
+        self.body = env.get_template(template_name).render(*args, **kwargs)
 
 
 class Roll(Roll):
@@ -61,7 +61,13 @@ async def door_opener(request, response):
 
 @app.route("/aider", methods=["GET"])
 async def volunteer_form(request, response):
-    response.html("form.html")
+    token = request.query.get("token")
+    try:
+        email = utils.read_token(token)
+    except ValueError:
+        # TODO message
+        raise HttpError(401, "Invalid token")
+    response.html("form.html", email=email)
 
 
 @app.route("/aider", methods=["POST"])

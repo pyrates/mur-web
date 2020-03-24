@@ -48,7 +48,7 @@
       <div class="container content">
         <div class="notification is-success">
           <p>
-            Vous êtes bien identifié avec l’adresse de courriel « <strong>foo@bar.fr</strong> »
+            Vous êtes bien identifié avec l’adresse de courriel « <strong>{{ email }}</strong> »
           </p>
         </div>
         <h1 class="title">PROPOSITION D’AIDE</h1>
@@ -65,7 +65,7 @@
             <div class="field">
               <label class="label" for="email">Courriel</label>
               <div class="control has-icons-left">
-                <input class="input" id="email" name="email" type="email" value="foo@bar.fr"  required>
+                <input class="input" id="email" name="email" type="email" value="{{ email }}"  required>
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
