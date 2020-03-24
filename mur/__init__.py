@@ -4,8 +4,8 @@ from pathlib import Path
 import minicli
 import ujson as json
 from jinja2 import Environment, PackageLoader, select_autoescape
-from roll import Roll, Response
-from roll.extensions import static, simple_server, traceback
+from roll import Response, Roll
+from roll.extensions import simple_server, static, traceback
 
 from . import config
 
@@ -36,7 +36,12 @@ async def on_startup():
 
 @app.route("/", methods=["GET"])
 async def home(request, response):
-    response.html("index.html")
+    response.html("home.html")
+
+
+@app.route("/form", methods=["GET"])
+async def form(request, response):
+    response.html("form.html")
 
 
 @app.route("/", methods=["POST"])
