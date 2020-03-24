@@ -4,7 +4,7 @@ from pathlib import Path
 import minicli
 import ujson as json
 from jinja2 import Environment, PackageLoader, select_autoescape
-from roll import Roll, Response, HttpError
+from roll import HttpError, Response, Roll
 from roll.extensions import simple_server, static, traceback
 
 from . import config, utils
@@ -44,7 +44,7 @@ async def door_opener(request, response):
     # Send email
     email = request.form.get("email")
     token = utils.create_token(email)
-    print(token)
+    print(f"http://localhost:1919/aider?token={token.decode()}")
     # TODO message
     response.status = 302
     response.headers["Location"] = "/"
