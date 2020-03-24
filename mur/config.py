@@ -1,9 +1,6 @@
 import locale
 import os
-from pathlib import Path
 
-DATA_ROOT = Path(__file__).parent.parent / "db"
-LOG_ROOT = Path("/tmp")
 SECRET = "sikretfordevonly"
 JWT_ALGORITHM = "HS256"
 SEND_EMAILS = False
@@ -11,7 +8,6 @@ SMTP_HOST = "mail.gandi.net"
 SMTP_PASSWORD = ""
 SMTP_LOGIN = ""
 FROM_EMAIL = "contact@mur-project.org"
-STAFF = []
 LOCALE = "fr_FR.UTF-8"
 SITE_NAME = "MUR Project"
 SITE_DESCRIPTION = "MUR Project"
